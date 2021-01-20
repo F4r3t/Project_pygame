@@ -28,6 +28,7 @@ code = 'green'
 all_sprites = pygame.sprite.Group()
 obstacle_group = pygame.sprite.Group()
 
+
 # функция для загрузки изображения
 def load_image(name, colorkey=None):
     fullname = os.path.join('cache', name)
@@ -46,6 +47,7 @@ def load_image(name, colorkey=None):
         image = image.convert_alpha()
     return image
 
+
 # Спрайт дороги
 class Road(pygame.sprite.Sprite):
     def __init__(self, x1, y1, y2):
@@ -63,6 +65,7 @@ class Road(pygame.sprite.Sprite):
         else:
             self.rect.y += 10
 
+
 # Спрайт машины игрока
 class Car(pygame.sprite.Sprite):
     cars = {'red': load_image('car_red.png'),
@@ -70,6 +73,7 @@ class Car(pygame.sprite.Sprite):
             'black': load_image('car_black.png'),
             'nyan_cat': load_image('nyncat.png')
             }
+
     # в зависимости от чит-кода задаётся изображение машины
     def __init__(self, code):
         super(Car, self).__init__(all_sprites)
@@ -80,6 +84,7 @@ class Car(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 170
         self.rect.y = 900 - self.rect.height
+
     # Изменение положения машины
     # В зависимости соответствующей клавиши
     def update(self, *args):
@@ -95,11 +100,13 @@ class Car(pygame.sprite.Sprite):
                 elif self.rect.x == 170:
                     self.rect.x = 320
 
+
 # Спрайт препятствия
 class Obstacle(pygame.sprite.Sprite):
     stone = load_image('large.png')
     tree = load_image('tree.png')
     sweet = load_image('sweet.png')
+
     # в зависимости от чит-кода задаётся изображение препятствия
     def __init__(self, nyancat):
         super(Obstacle, self).__init__(all_sprites, obstacle_group)
@@ -113,6 +120,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.y = 0 - self.rect.height
         self.v = 10
         self.score = 0
+
     # если препятствие пройдено, то добавляется 1 очко и меняется положение препятствия
     def update(self, *args):
         if self.rect.y >= height:
@@ -131,10 +139,12 @@ class Obstacle(pygame.sprite.Sprite):
     def get_score(self):
         return self.score
 
+
 # функция аварийного закрытия игр
 def terminate():
     pygame.quit()
     sys.exit()
+
 
 # функция начала игры
 def start_screen():
@@ -262,6 +272,7 @@ def game(code):
         if pygame.sprite.spritecollideany(car, obstacle_group):
             run = False
     return game_over(obs.get_score())
+
 
 # функция окончания игры
 def game_over(score):
